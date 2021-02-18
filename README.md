@@ -38,3 +38,12 @@ secretaccesskey : +shbuR*****
 ```
 1. sls remove
 ```
+
+### sls create template
+
+```
+sls create --template aws-nodejs --path <lambda name>
+sls create --template aws-java-maven --path <lambda name>
+sls create --template aws-csharp --path <lambda name>
+```
+

@@ -1,5 +1,7 @@
+import time
 
 def hello(event, context):
-    print("Farts !")
+    print("second update")
+    time.sleep(4)
     return "Hello World"
 

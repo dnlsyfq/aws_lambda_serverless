@@ -11,7 +11,7 @@
 #
 # Happy Coding!
 
-service: hello-world-python
+service: nodejs-example
 # app and org for use with dashboard.serverless.com
 #app: your-app-name
 #org: your-org-name
@@ -22,10 +22,8 @@ frameworkVersion: '2'
 
 provider:
   name: aws
-  runtime: python3.8
+  runtime: nodejs12.x
   lambdaHashingVersion: 20201221
-  profile: serverless-admin
-  region: us-east-1
 
 # you can overwrite defaults here
 #  stage: dev
@@ -54,22 +52,15 @@ provider:
 # you can add packaging information here
 #package:
 #  include:
-#    - include-me.py
+#    - include-me.js
 #    - include-me-dir/**
 #  exclude:
-#    - exclude-me.py
+#    - exclude-me.js
 #    - exclude-me-dir/**
 
 functions:
-  hello-short-timeout:
+  hello:
     handler: handler.hello
-    memorySize: 128
-    timeout: 3
-  hello-long-timeout:
-    handler: handler.hello
-    memorySize: 256
-    timeout: 6
-  
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

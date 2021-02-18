@@ -1,15 +1,26 @@
 {
   "service": {
-    "service": "hello-world-python",
+    "service": "python-example-iam",
     "serviceObject": {
-      "name": "hello-world-python"
+      "name": "python-example-iam"
     },
     "provider": {
       "name": "aws",
-      "runtime": "python3.8",
-      "lambdaHashingVersion": "20201221",
+      "runtime": "python2.7",
       "profile": "serverless-admin",
       "region": "us-east-1",
+      "lambdaHashingVersion": "20201221",
+      "iamRoleStatements": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "lambda:*"
+          ],
+          "Resource": [
+            "*"
+          ]
+        }
+      ],
       "stage": "dev",
       "variableSyntax": "\\${([^{}:]+?(?:\\(|:)(?:[^:{}][^{}]*?)?)}",
       "versionFunctions": true,
@@ -86,16 +97,10 @@
               }
             }
           },
-          "HelloDashshortDashtimeoutLogGroup": {
+          "HelloDashiamDashexampleLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/hello-world-python-dev-hello-short-timeout"
-            }
-          },
-          "HelloDashlongDashtimeoutLogGroup": {
-            "Type": "AWS::Logs::LogGroup",
-            "Properties": {
-              "LogGroupName": "/aws/lambda/hello-world-python-dev-hello-long-timeout"
+              "LogGroupName": "/aws/lambda/python-example-iam-dev-hello-iam-example"
             }
           },
           "IamRoleLambdaExecution": {
@@ -123,7 +128,7 @@
                     "Fn::Join": [
                       "-",
                       [
-                        "hello-world-python",
+                        "python-example-iam",
                         "dev",
                         "lambda"
                       ]
@@ -140,7 +145,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/hello-world-python-dev*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/python-example-iam-dev*:*"
                           }
                         ]
                       },
@@ -151,9 +156,12 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/hello-world-python-dev*:*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/python-example-iam-dev*:*:*"
                           }
                         ]
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][0]"
                       }
                     ]
                   }
@@ -164,7 +172,7 @@
                 "Fn::Join": [
                   "-",
                   [
-                    "hello-world-python",
+                    "python-example-iam",
                     "dev",
                     {
                       "Ref": "AWS::Region"
@@ -175,44 +183,19 @@
               }
             }
           },
-          "HelloDashshortDashtimeoutLambdaFunction": {
+          "HelloDashiamDashexampleLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/hello-world-python/dev/1613666770776-2021-02-18T16:46:10.776Z/hello-world-python.zip"
+                "S3Key": "serverless/python-example-iam/dev/1613668381661-2021-02-18T17:13:01.661Z/python-example-iam.zip"
               },
               "Handler": "handler.hello",
-              "Runtime": "python3.8",
-              "FunctionName": "hello-world-python-dev-hello-short-timeout",
-              "MemorySize": 128,
-              "Timeout": 3,
-              "Role": {
-                "Fn::GetAtt": [
-                  "IamRoleLambdaExecution",
-                  "Arn"
-                ]
-              }
-            },
-            "DependsOn": [
-              "HelloDashshortDashtimeoutLogGroup"
-            ]
-          },
-          "HelloDashlongDashtimeoutLambdaFunction": {
-            "Type": "AWS::Lambda::Function",
-            "Properties": {
-              "Code": {
-                "S3Bucket": {
-                  "Ref": "ServerlessDeploymentBucket"
-                },
-                "S3Key": "serverless/hello-world-python/dev/1613666770776-2021-02-18T16:46:10.776Z/hello-world-python.zip"
-              },
-              "Handler": "handler.hello",
-              "Runtime": "python3.8",
-              "FunctionName": "hello-world-python-dev-hello-long-timeout",
-              "MemorySize": 256,
+              "Runtime": "python2.7",
+              "FunctionName": "python-example-iam-dev-hello-iam-example",
+              "MemorySize": 1024,
               "Timeout": 6,
               "Role": {
                 "Fn::GetAtt": [
@@ -222,27 +205,17 @@
               }
             },
             "DependsOn": [
-              "HelloDashlongDashtimeoutLogGroup"
+              "HelloDashiamDashexampleLogGroup"
             ]
           },
-          "HelloDashshortDashtimeoutLambdaVersiond122lCKuuAmKuzy4UlUivvX5jeEe73WFS3tl0uSkvo": {
+          "HelloDashiamDashexampleLambdaVersionyXx2rYB4zoi3B1plhGrveeyr5vXPdB7bsSUXflFDHY": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
-                "Ref": "HelloDashshortDashtimeoutLambdaFunction"
+                "Ref": "HelloDashiamDashexampleLambdaFunction"
               },
-              "CodeSha256": "E6qsUmrqZCcgQTreqFN2S3I4m6AAbj3PtIFy1YksDYY="
-            }
-          },
-          "HelloDashlongDashtimeoutLambdaVersionT8ULb4ZLXF16uRc4zuQ4cPL0m1otwUFOujHuTrWpU": {
-            "Type": "AWS::Lambda::Version",
-            "DeletionPolicy": "Retain",
-            "Properties": {
-              "FunctionName": {
-                "Ref": "HelloDashlongDashtimeoutLambdaFunction"
-              },
-              "CodeSha256": "E6qsUmrqZCcgQTreqFN2S3I4m6AAbj3PtIFy1YksDYY="
+              "CodeSha256": "UVeHQuMylSoqMI5wKE7FEjr63ojlHrFcydVHX/uM9OY="
             }
           }
         },
@@ -252,16 +225,10 @@
               "Ref": "ServerlessDeploymentBucket"
             }
           },
-          "HelloDashshortDashtimeoutLambdaFunctionQualifiedArn": {
+          "HelloDashiamDashexampleLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloDashshortDashtimeoutLambdaVersiond122lCKuuAmKuzy4UlUivvX5jeEe73WFS3tl0uSkvo"
-            }
-          },
-          "HelloDashlongDashtimeoutLambdaFunctionQualifiedArn": {
-            "Description": "Current Lambda function version",
-            "Value": {
-              "Ref": "HelloDashlongDashtimeoutLambdaVersionT8ULb4ZLXF16uRc4zuQ4cPL0m1otwUFOujHuTrWpU"
+              "Ref": "HelloDashiamDashexampleLambdaVersionyXx2rYB4zoi3B1plhGrveeyr5vXPdB7bsSUXflFDHY"
             }
           }
         }
@@ -352,29 +319,16 @@
     },
     "pluginsData": {},
     "functions": {
-      "hello-short-timeout": {
+      "hello-iam-example": {
         "handler": "handler.hello",
-        "memorySize": 128,
-        "timeout": 3,
         "events": [],
-        "name": "hello-world-python-dev-hello-short-timeout",
+        "name": "python-example-iam-dev-hello-iam-example",
         "package": {},
-        "memory": 128,
-        "runtime": "python3.8",
-        "vpc": {},
-        "versionLogicalId": "HelloDashshortDashtimeoutLambdaVersiond122lCKuuAmKuzy4UlUivvX5jeEe73WFS3tl0uSkvo"
-      },
-      "hello-long-timeout": {
-        "handler": "handler.hello",
-        "memorySize": 256,
+        "memory": 1024,
         "timeout": 6,
-        "events": [],
-        "name": "hello-world-python-dev-hello-long-timeout",
-        "package": {},
-        "memory": 256,
-        "runtime": "python3.8",
+        "runtime": "python2.7",
         "vpc": {},
-        "versionLogicalId": "HelloDashlongDashtimeoutLambdaVersionT8ULb4ZLXF16uRc4zuQ4cPL0m1otwUFOujHuTrWpU"
+        "versionLogicalId": "HelloDashiamDashexampleLambdaVersionyXx2rYB4zoi3B1plhGrveeyr5vXPdB7bsSUXflFDHY"
       }
     },
     "configValidationMode": "warn",
@@ -393,10 +347,10 @@
       }
     },
     "isDashboardMonitoringPreconfigured": false,
-    "artifact": "C:\\Users\\Dan\\Code\\AWS\\aws_lambda_serverless\\hello-world-python\\.serverless\\hello-world-python.zip"
+    "artifact": "C:\\Users\\Dan\\Code\\AWS\\aws_lambda_serverless\\python-example-iam\\.serverless\\python-example-iam.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/hello-world-python/dev/1613666770776-2021-02-18T16:46:10.776Z",
-    "artifact": "hello-world-python.zip"
+    "artifactDirectoryName": "serverless/python-example-iam/dev/1613668381661-2021-02-18T17:13:01.661Z",
+    "artifact": "python-example-iam.zip"
   }
 }
